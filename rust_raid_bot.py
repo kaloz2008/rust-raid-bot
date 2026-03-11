@@ -25,6 +25,8 @@ EXPLOSIVES = {
     "fire_arrows":{"sulfur": 10,   "gp": 0,    "charcoal": 0,    "label": "Fire Arrow",          "emoji": "🏹"},
     "beancan":    {"sulfur": 120,  "gp": 60,   "charcoal": 120,  "label": "Beancan Grenade",     "emoji": "🥫"},
     "f1_grenade": {"sulfur": 60,   "gp": 30,   "charcoal": 60,   "label": "F1 Grenade",          "emoji": "💣"},
+    # Propane Bomb: 450 GP + 20 LGF + 1 propane tank → sulfur=900, gp=450, charcoal=900
+    "propane_bomb":{"sulfur": 900,  "gp": 450,  "charcoal": 900,  "label": "Propane Explosive Bomb","emoji": "🛢️"},
 }
 
 TOOLS = {
@@ -46,24 +48,19 @@ TOOLS = {
 # Which explosives are craftable at each workbench tier
 # ══════════════════════════════════════════════════════════════════════════════
 WB_TIERS = {
-    0: {  # No workbench — primitive only
-        "label": "🪨 No Workbench",
-        "explosives": {"fire_arrows", "beancan", "f1_grenade"},
-        "tools": {"rock", "bone_club", "stone_spear", "wooden_spear"},
-    },
-    1: {  # Workbench T1
+    1: {  # Workbench T1 — satchel, fire arrows, beancan, f1
         "label": "🔧 Workbench T1",
-        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo"},
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "satchel"},
         "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword"},
     },
-    2: {  # Workbench T2
+    2: {  # Workbench T2 — adds propane bomb
         "label": "⚙️ Workbench T2",
-        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo", "satchel", "hv_rocket", "inc_rocket"},
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "satchel", "propane_bomb"},
         "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword", "jackhammer"},
     },
-    3: {  # Workbench T3 — everything
+    3: {  # Workbench T3 — adds explo ammo, HV rocket, inc rocket, rocket, C4
         "label": "🏭 Workbench T3",
-        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo", "satchel", "hv_rocket", "inc_rocket", "rocket", "c4"},
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "satchel", "propane_bomb", "explo_ammo", "hv_rocket", "inc_rocket", "rocket", "c4"},
         "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword", "jackhammer"},
     },
 }
@@ -80,49 +77,49 @@ STRUCTURES = {
     # ── WALLS ─────────────────────────────────────────────────────────────────
     "Wood Wall": {
         "hp": 250, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Soft side: pickaxe/icepick works well",
     },
     "Stone Wall": {
         "hp": 500, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": "Soft side only: pickaxe viable (~200 hits)",
     },
     "Metal Wall": {
         "hp": 1000, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "No tools work on metal",
     },
     "Armored Wall": {
         "hp": 2000, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Hardest structure in game",
     },
     "Wood Half Wall": {
         "hp": 125, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Stone Half Wall": {
         "hp": 250, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
     "Metal Half Wall": {
         "hp": 500, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Armored Half Wall": {
         "hp": 1000, "category": "🧱 Walls",
-        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
@@ -130,73 +127,73 @@ STRUCTURES = {
     # ── FOUNDATIONS / FLOORS / ROOFS ──────────────────────────────────────────
     "Wood Foundation": {
         "hp": 250, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Stone Foundation": {
         "hp": 500, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
     "Metal Foundation": {
         "hp": 1000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Armored Foundation": {
         "hp": 2000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Wood Floor": {
         "hp": 250, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Stone Floor": {
         "hp": 500, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
     "Metal Floor": {
         "hp": 1000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Armored Floor": {
         "hp": 2000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Wood Roof": {
         "hp": 250, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Stone Roof": {
         "hp": 500, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
     "Metal Roof": {
         "hp": 1000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 125, "satchel": 43.5, "explo_ammo": 2.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
     "Armored Roof": {
         "hp": 2000, "category": "🏗️ Floors & Roofs",
-        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 133, "satchel": 43.5, "explo_ammo": 2.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": None,
     },
@@ -204,43 +201,43 @@ STRUCTURES = {
     # ── DOORS ─────────────────────────────────────────────────────────────────
     "Wood Door": {
         "hp": 200, "category": "🚪 Doors",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Hatchet: ~37 hits. Any melee works",
     },
     "Sheet Metal Door": {
         "hp": 250, "category": "🚪 Doors",
-        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Armored Door": {
         "hp": 1000, "category": "🚪 Doors",
-        "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Garage Door": {
         "hp": 600, "category": "🚪 Doors",
-        "exp": {"c4": 300, "rocket": 200, "satchel": 67, "explo_ammo": 4.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 300, "rocket": 200, "satchel": 67, "explo_ammo": 4.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Wood Double Door": {
         "hp": 200, "category": "🚪 Doors",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Same as 2x wood door",
     },
     "Sheet Metal Double Door": {
         "hp": 250, "category": "🚪 Doors",
-        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Armored Double Door": {
         "hp": 1000, "category": "🚪 Doors",
-        "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
@@ -248,19 +245,19 @@ STRUCTURES = {
     # ── HATCHES ───────────────────────────────────────────────────────────────
     "Wood Hatch": {
         "hp": 200, "category": "🪜 Hatches",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Same as wood door",
     },
     "Metal Hatch": {
         "hp": 250, "category": "🪜 Hatches",
-        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Ladder Hatch": {
         "hp": 250, "category": "🪜 Hatches",
-        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
@@ -268,31 +265,31 @@ STRUCTURES = {
     # ── WINDOWS & MISC ────────────────────────────────────────────────────────
     "Glass Window": {
         "hp": 50, "category": "🖼️ Windows & Misc",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 25, "hatchet": 13, "salvaged_icepick": 25, "salvaged_axe": 25, "jackhammer": 25, "salvaged_sword": 25, "stone_spear": 8, "bone_club": 5, "machete": 12, "rock": 2, "wooden_spear": 6},
         "note": "Any melee breaks it in 2-4 hits",
     },
     "Reinforced Window": {
         "hp": 500, "category": "🖼️ Windows & Misc",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Metal Embrasure": {
         "hp": 250, "category": "🖼️ Windows & Misc",
-        "exp": {"c4": 125, "rocket": 63, "satchel": 19, "explo_ammo": 1.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 125, "rocket": 63, "satchel": 19, "explo_ammo": 1.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Floor Grill": {
         "hp": 150, "category": "🖼️ Windows & Misc",
-        "exp": {"c4": 250, "rocket": 150, "satchel": 75, "explo_ammo": 5.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 150, "satchel": 75, "explo_ammo": 5.0, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Tool Cupboard": {
         "hp": 100, "category": "🖼️ Windows & Misc",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 50, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 50, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "🎯 Priority target! Destroys upkeep",
     },
@@ -300,25 +297,25 @@ STRUCTURES = {
     # ── EXTERNAL ──────────────────────────────────────────────────────────────
     "High External Wood Wall": {
         "hp": 500, "category": "🏰 External",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 29, "inc_rocket": 250, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 29, "inc_rocket": 250, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Inc rocket is effective here",
     },
     "High External Stone Wall": {
         "hp": 500, "category": "🏰 External",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
     "High External Wood Gate": {
         "hp": 500, "category": "🏰 External",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 29, "inc_rocket": 250, "fire_arrows": 8, "beancan": 15, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 29, "inc_rocket": 250, "fire_arrows": 8, "beancan": 15, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "High External Stone Gate": {
         "hp": 500, "category": "🏰 External",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": None,
     },
@@ -326,31 +323,31 @@ STRUCTURES = {
     # ── DEPLOYABLES — TURRETS & TRAPS ─────────────────────────────────────────
     "Auto Turret": {
         "hp": 1000, "category": "🤖 Deployables",
-        "exp": {"c4": 250, "rocket": 143, "satchel": 45, "explo_ammo": 10, "hv_rocket": 333, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 143, "satchel": 45, "explo_ammo": 10, "hv_rocket": 333, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": 20, "salvaged_icepick": None, "salvaged_axe": 30, "jackhammer": None, "salvaged_sword": 40, "stone_spear": 8, "bone_club": 5, "machete": 12, "rock": 5, "wooden_spear": 6},
         "note": "⚠️ Will shoot back! Melee from behind works. Hatchet: ~50 hits",
     },
     "Flame Turret": {
         "hp": 300, "category": "🤖 Deployables",
-        "exp": {"c4": 250, "rocket": 100, "satchel": 38, "explo_ammo": 30, "hv_rocket": 100, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 100, "satchel": 38, "explo_ammo": 30, "hv_rocket": 100, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 75},
         "tools": {"pickaxe": 11, "hatchet": 6, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "⚠️ Will torch you if too close! Use melee from max range or explo from distance",
     },
     "SAM Site": {
         "hp": 1000, "category": "🤖 Deployables",
-        "exp": {"c4": 250, "rocket": 143, "satchel": 50, "explo_ammo": 10, "hv_rocket": 333, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 143, "satchel": 50, "explo_ammo": 10, "hv_rocket": 333, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": 40, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Salvaged sword: ~25 hits. Use HV rocket — extremely cost efficient",
     },
     "Shotgun Trap": {
         "hp": 200, "category": "🤖 Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 75},
         "tools": {"pickaxe": 11, "hatchet": 6, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "⚠️ Will shoot you! Destroy from behind or side",
     },
     "Tesla Coil": {
         "hp": 250, "category": "🤖 Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 75},
         "tools": {"pickaxe": 11, "hatchet": 6, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "⚠️ Deals up to 35 dmg/sec when powered! Disable power first",
     },
@@ -358,67 +355,67 @@ STRUCTURES = {
     # ── DEPLOYABLES — STORAGE ─────────────────────────────────────────────────
     "Large Wood Box": {
         "hp": 300, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Easiest way: any melee ~27 hatchet hits",
     },
     "Metal Large Box": {
         "hp": 375, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Small Wooden Box": {
         "hp": 80, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Any melee works — ~15 hatchet hits",
     },
     "Vending Machine": {
         "hp": 200, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Often used as TC bunker — worth destroying",
     },
     "Workbench T1": {
         "hp": 250, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Satchels are cost effective here",
     },
     "Workbench T2": {
         "hp": 350, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Workbench T3": {
         "hp": 500, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Furnace": {
         "hp": 200, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Large Furnace": {
         "hp": 500, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Research Table": {
         "hp": 200, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
     "Repair Bench": {
         "hp": 200, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
@@ -426,31 +423,31 @@ STRUCTURES = {
     # ── DEPLOYABLES — BARRICADES ──────────────────────────────────────────────
     "Metal Barricade": {
         "hp": 400, "category": "🚧 Barricades",
-        "exp": {"c4": 250, "rocket": 200, "satchel": 67, "explo_ammo": 3.7, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 200, "satchel": 67, "explo_ammo": 3.7, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Wooden Barricade": {
         "hp": 200, "category": "🚧 Barricades",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": "Any melee works fine",
     },
     "Concrete Barricade": {
         "hp": 400, "category": "🚧 Barricades",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 75},
         "tools": {"pickaxe": 2.5, "hatchet": 1.25, "salvaged_icepick": 5, "salvaged_axe": 2.5, "jackhammer": 5, "salvaged_sword": 2, "stone_spear": 0.5, "bone_club": 0.3, "machete": 1, "rock": 0.1, "wooden_spear": 0.4},
         "note": "Pickaxe soft-side works",
     },
     "Prison Cell Wall": {
         "hp": 500, "category": "🚧 Barricades",
-        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None, "wooden_spear": None},
         "note": "Explosives only",
     },
     "Chainlink Fence": {
         "hp": 200, "category": "🚧 Barricades",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
+        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None, "propane_bomb": 135},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1, "wooden_spear": 3},
         "note": None,
     },
@@ -520,7 +517,7 @@ def best_least_explosives(struct: str, wb_tier: int = 3):
     """
     hp = STRUCTURES[struct]["hp"]
     allowed = allowed_explosives(wb_tier)
-    best_key, best_qty, best_waste, best_s = None, None, 10**9, 10**9
+    best_key, best_qty, best_waste, best_s = None, 10**9, 10**9, 10**9
     for k, dmg in STRUCTURES[struct]["exp"].items():
         if dmg is None or k not in allowed: continue
         q = hits_needed(hp, dmg)
@@ -531,7 +528,7 @@ def best_least_explosives(struct: str, wb_tier: int = 3):
            (q == best_qty and waste < best_waste) or \
            (q == best_qty and waste == best_waste and s < best_s):
             best_key, best_qty, best_waste, best_s = k, q, waste, s
-    return best_key, best_qty
+    return (best_key, best_qty) if best_key is not None else (None, None)
 
 def calculate(raid_list: list, wb_tier: int = 3) -> discord.Embed:
     allowed = allowed_explosives(wb_tier)
@@ -585,14 +582,26 @@ def calculate(raid_list: list, wb_tier: int = 3) -> discord.Embed:
             waste = per * dmg - hp
             wn = f" *(+{waste:.0f} overkill)*" if waste > 0 else " ✅"
             lines.append(f"• {qty}× **{struct}** → {m['emoji']} {m['label']} ×`{total:,}`{wn}")
-        summary = [f"{EXPLOSIVES[k]['emoji']} **{EXPLOSIVES[k]['label']}**: `{v:,}`" for k, v in totals.items() if v > 0]
-        ts = sum(sulfur_cost(k, v) for k, v in totals.items())
-        tg = sum(gp_cost(k, v) for k, v in totals.items())
-        tc = sum(charcoal_cost(k, v) for k, v in totals.items())
+
+        # Breakdown per explosive type used
+        used = {k: v for k, v in totals.items() if v > 0}
+        summary_lines = []
+        for k, v in used.items():
+            m = EXPLOSIVES[k]
+            s, g, c = sulfur_cost(k, v), gp_cost(k, v), charcoal_cost(k, v)
+            res = [f"🟡 `{s:,}` S"]
+            if g: res.append(f"🪨 `{g:,}` GP")
+            if c: res.append(f"🖤 `{c:,}` Coal")
+            summary_lines.append(f"{m['emoji']} **{m['label']}** ×`{v:,}` — " + "  ".join(res))
+
+        ts = sum(sulfur_cost(k, v) for k, v in used.items())
+        tg = sum(gp_cost(k, v) for k, v in used.items())
+        tc = sum(charcoal_cost(k, v) for k, v in used.items())
+
         text = "\n".join(lines)
-        if summary:
-            text += "\n\n**You'll need:**\n" + "\n".join(summary)
-            text += f"\n🟡 **{ts:,}** Sulfur"
+        if summary_lines:
+            text += "\n\n**🎒 Bring:**\n" + "\n".join(summary_lines)
+            text += f"\n\n**📦 Total resources:**  🟡 **{ts:,}** Sulfur"
             if tg: text += f"  •  🪨 **{tg:,}** GP"
             if tc: text += f"  •  🖤 **{tc:,}** Charcoal"
         return text
@@ -711,7 +720,8 @@ class RaidView(discord.ui.View):
     def __init__(self, session: dict):
         super().__init__(timeout=300)
         self.session          = session
-        self.wb_tier          = 3   # default: T3 (all explosives)
+        self.wb_tier          = 1   # default: T1
+        # Note: tiers are now 1, 2, 3 only (no tier 0)
         self.current_category = None
 
         self.wb_select     = WorkbenchSelect(self)
