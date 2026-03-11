@@ -239,7 +239,7 @@ STRUCTURES = {
 
     # ── WINDOWS & MISC ────────────────────────────────────────────────────────
     "Glass Window": {
-        "hp": 50, "category": "🖼️ Windows & Misc",
+        "hp": 350, "category": "🖼️ Windows & Misc",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 25, "hatchet": 13, "salvaged_icepick": 25, "salvaged_axe": 25, "jackhammer": 25, "salvaged_sword": 25, "stone_spear": 8, "bone_club": 5, "machete": 12, "rock": 2},
         "note": "Any melee breaks it in 2-4 hits",
@@ -315,7 +315,7 @@ STRUCTURES = {
         "note": "Salvaged sword: ~25 hits. Use HV rocket — extremely cost efficient",
     },
     "Shotgun Trap": {
-        "hp": 200, "category": "🤖 Deployables",
+        "hp": 300, "category": "🤖 Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 6, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "⚠️ Will shoot you! Destroy from behind or side",
@@ -334,38 +334,32 @@ STRUCTURES = {
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Easiest way: any melee ~27 hatchet hits",
     },
-    "Metal Large Box": {
-        "hp": 375, "category": "📦 Storage & Deployables",
-        "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
-        "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
-        "note": "Explosives only",
-    },
     "Small Wooden Box": {
-        "hp": 80, "category": "📦 Storage & Deployables",
+        "hp": 150, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Any melee works — ~15 hatchet hits",
     },
     "Vending Machine": {
-        "hp": 200, "category": "📦 Storage & Deployables",
+        "hp": 1250, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Often used as TC bunker — worth destroying",
     },
     "Workbench T1": {
-        "hp": 250, "category": "📦 Storage & Deployables",
+        "hp": 500, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Satchels are cost effective here",
     },
     "Workbench T2": {
-        "hp": 350, "category": "📦 Storage & Deployables",
+        "hp": 500, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": None,
     },
     "Workbench T3": {
-        "hp": 500, "category": "📦 Storage & Deployables",
+        "hp": 750, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": None,
@@ -377,7 +371,7 @@ STRUCTURES = {
         "note": None,
     },
     "Large Furnace": {
-        "hp": 500, "category": "📦 Storage & Deployables",
+        "hp": 1500, "category": "📦 Storage & Deployables",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": None,
@@ -397,31 +391,31 @@ STRUCTURES = {
 
     # ── DEPLOYABLES — BARRICADES ──────────────────────────────────────────────
     "Metal Barricade": {
-        "hp": 400, "category": "🚧 Barricades",
+        "hp": 600, "category": "🚧 Barricades",
         "exp": {"c4": 250, "rocket": 200, "satchel": 67, "explo_ammo": 3.7, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Explosives only",
     },
     "Wooden Barricade": {
-        "hp": 200, "category": "🚧 Barricades",
+        "hp": 250, "category": "🚧 Barricades",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": 36, "inc_rocket": 125, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Any melee works fine",
     },
     "Concrete Barricade": {
-        "hp": 400, "category": "🚧 Barricades",
+        "hp": 500, "category": "🚧 Barricades",
         "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": 2.5, "hatchet": None, "salvaged_icepick": 5, "salvaged_axe": None, "jackhammer": 5, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Pickaxe soft-side works",
     },
     "Prison Cell Wall": {
-        "hp": 500, "category": "🚧 Barricades",
+        "hp": 300, "category": "🚧 Barricades",
         "exp": {"c4": 250, "rocket": 130, "satchel": 50, "explo_ammo": 2.4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Explosives only",
     },
     "Chainlink Fence": {
-        "hp": 200, "category": "🚧 Barricades",
+        "hp": 100, "category": "🚧 Barricades",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 5.5, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": None,
