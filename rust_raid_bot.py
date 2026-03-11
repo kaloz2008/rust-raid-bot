@@ -14,10 +14,10 @@ from discord.ext import commands
 # RECIPES  (gunpowder per unit, sulfur per unit)
 # ──────────────────────────────────────────────────────────────────────────────
 RECIPES = {
-    "explosive_ammo": (10,   10),
-    "rockets":        (1400, 1400),
-    "c4":             (2200, 2200),
-    "satchels":       (480,  480),
+    "explosive_ammo": (10,   20),
+    "rockets":        (1400, 2800),
+    "c4":             (2200, 4400),
+    "satchels":       (480,  960),
     "fire_arrows":    (0,    10),
 }
 
