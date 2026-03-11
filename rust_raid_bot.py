@@ -42,6 +42,33 @@ TOOLS = {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
+# WORKBENCH TIER UNLOCK DATA
+# Which explosives are craftable at each workbench tier
+# ══════════════════════════════════════════════════════════════════════════════
+WB_TIERS = {
+    0: {  # No workbench — primitive only
+        "label": "🪨 No Workbench",
+        "explosives": {"fire_arrows", "beancan", "f1_grenade"},
+        "tools": {"rock", "bone_club", "stone_spear", "wooden_spear"},
+    },
+    1: {  # Workbench T1
+        "label": "🔧 Workbench T1",
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo"},
+        "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword"},
+    },
+    2: {  # Workbench T2
+        "label": "⚙️ Workbench T2",
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo", "satchel", "hv_rocket", "inc_rocket"},
+        "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword", "jackhammer"},
+    },
+    3: {  # Workbench T3 — everything
+        "label": "🏭 Workbench T3",
+        "explosives": {"fire_arrows", "beancan", "f1_grenade", "explo_ammo", "satchel", "hv_rocket", "inc_rocket", "rocket", "c4"},
+        "tools": {"rock", "bone_club", "stone_spear", "wooden_spear", "hatchet", "pickaxe", "machete", "salvaged_axe", "salvaged_icepick", "salvaged_sword", "jackhammer"},
+    },
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
 # STRUCTURE + DEPLOYABLE DATA
 # hp = health points
 # exp = damage per hit (None = immune / not effective)
@@ -454,22 +481,29 @@ def gp_cost(exp_key: str, qty: int) -> int:
 def charcoal_cost(exp_key: str, qty: int) -> int:
     return EXPLOSIVES[exp_key]["charcoal"] * qty
 
-def best_cheapest(struct: str):
+def allowed_explosives(wb_tier: int) -> set:
+    return WB_TIERS[wb_tier]["explosives"]
+
+def best_cheapest(struct: str, wb_tier: int = 3):
+    """Lowest sulfur cost, restricted to wb_tier-craftable explosives."""
     hp = STRUCTURES[struct]["hp"]
+    allowed = allowed_explosives(wb_tier)
     best_key, best_qty, best_s = None, None, 10**9
     for k, dmg in STRUCTURES[struct]["exp"].items():
-        if dmg is None: continue
+        if dmg is None or k not in allowed: continue
         q = hits_needed(hp, dmg)
         s = sulfur_cost(k, q)
         if s < best_s:
             best_s, best_key, best_qty = s, k, q
     return best_key, best_qty
 
-def best_efficient(struct: str):
+def best_efficient(struct: str, wb_tier: int = 3):
+    """Min overkill, tiebreak by sulfur, restricted to wb_tier-craftable explosives."""
     hp = STRUCTURES[struct]["hp"]
+    allowed = allowed_explosives(wb_tier)
     best_key, best_qty, best_waste, best_s = None, None, 10**9, 10**9
     for k, dmg in STRUCTURES[struct]["exp"].items():
-        if dmg is None: continue
+        if dmg is None or k not in allowed: continue
         q = hits_needed(hp, dmg)
         waste = q * dmg - hp
         s = sulfur_cost(k, q)
@@ -477,25 +511,48 @@ def best_efficient(struct: str):
             best_waste, best_s, best_key, best_qty = waste, s, k, q
     return best_key, best_qty
 
-def calculate(raid_list: list) -> discord.Embed:
-    # Per-explosive totals
+def best_least_explosives(struct: str, wb_tier: int = 3):
+    """
+    Fewest total units of explosive used, tiebreak:
+      1. least overkill damage
+      2. least sulfur
+    Restricted to wb_tier-craftable explosives.
+    """
+    hp = STRUCTURES[struct]["hp"]
+    allowed = allowed_explosives(wb_tier)
+    best_key, best_qty, best_waste, best_s = None, None, 10**9, 10**9
+    for k, dmg in STRUCTURES[struct]["exp"].items():
+        if dmg is None or k not in allowed: continue
+        q = hits_needed(hp, dmg)
+        waste = q * dmg - hp
+        s = sulfur_cost(k, q)
+        # Primary: fewest units. Secondary: least waste. Tertiary: least sulfur.
+        if (q < best_qty) or \
+           (q == best_qty and waste < best_waste) or \
+           (q == best_qty and waste == best_waste and s < best_s):
+            best_key, best_qty, best_waste, best_s = k, q, waste, s
+    return best_key, best_qty
+
+def calculate(raid_list: list, wb_tier: int = 3) -> discord.Embed:
+    allowed = allowed_explosives(wb_tier)
+    wb_label = WB_TIERS[wb_tier]["label"]
+
+    # Per-explosive totals (only allowed)
     exp_totals = {k: 0 for k in EXPLOSIVES}
     for struct, qty in raid_list:
         hp = STRUCTURES[struct]["hp"]
         for k, dmg in STRUCTURES[struct]["exp"].items():
-            if dmg is not None:
+            if dmg is not None and k in allowed:
                 exp_totals[k] += hits_needed(hp, dmg) * qty
 
     exp_lines = []
     for k, total in exp_totals.items():
         if total == 0: continue
         m = EXPLOSIVES[k]
-        s = sulfur_cost(k, total)
-        g = gp_cost(k, total)
-        c = charcoal_cost(k, total)
+        s, g, c = sulfur_cost(k, total), gp_cost(k, total), charcoal_cost(k, total)
         line = f"{m['emoji']} **{m['label']}** — `{total:,}`"
         parts = [f"🟡 `{s:,}` Sulfur"]
-        if g: parts.append(f"🪨 `{g:,}` Gunpowder")
+        if g: parts.append(f"🪨 `{g:,}` GP")
         if c: parts.append(f"🖤 `{c:,}` Charcoal")
         line += "\n> " + "  •  ".join(parts)
         exp_lines.append(line)
@@ -513,59 +570,52 @@ def calculate(raid_list: list) -> discord.Embed:
         for k, v in tool_totals.items() if v > 0
     ]
 
-    # Recommendation 1 — cheapest (lowest sulfur)
-    cheap_lines, cheap_exp_totals = [], {k: 0 for k in EXPLOSIVES}
-    for struct, qty in raid_list:
-        k, per = best_cheapest(struct)
-        if k is None:
-            cheap_lines.append(f"• {qty}× **{struct}** → ❌ no explosive works")
-            continue
-        total = per * qty
-        cheap_exp_totals[k] += total
-        m = EXPLOSIVES[k]
-        cheap_lines.append(f"• {qty}× **{struct}** → {m['emoji']} {m['label']} ×`{total:,}` (🟡`{sulfur_cost(k,total):,}`)")
-    cheap_summary = [f"{EXPLOSIVES[k]['emoji']} **{EXPLOSIVES[k]['label']}**: `{v:,}`" for k, v in cheap_exp_totals.items() if v > 0]
-    cheap_s = sum(sulfur_cost(k, v) for k, v in cheap_exp_totals.items())
-    cheap_g = sum(gp_cost(k, v) for k, v in cheap_exp_totals.items())
-    cheap_c = sum(charcoal_cost(k, v) for k, v in cheap_exp_totals.items())
-    cheap_text = "\n".join(cheap_lines) + "\n\n**You'll need:**\n" + "\n".join(cheap_summary)
-    cheap_text += f"\n🟡 **{cheap_s:,}** Sulfur"
-    if cheap_g: cheap_text += f"  •  🪨 **{cheap_g:,}** Gunpowder"
-    if cheap_c: cheap_text += f"  •  🖤 **{cheap_c:,}** Charcoal"
+    def build_rec(picker_fn, title, emoji):
+        lines, totals = [], {k: 0 for k in EXPLOSIVES}
+        for struct, qty in raid_list:
+            k, per = picker_fn(struct, wb_tier)
+            if k is None:
+                lines.append(f"• {qty}× **{struct}** → ❌ not possible with {wb_label}")
+                continue
+            total = per * qty
+            totals[k] += total
+            m = EXPLOSIVES[k]
+            hp = STRUCTURES[struct]["hp"]
+            dmg = STRUCTURES[struct]["exp"][k]
+            waste = per * dmg - hp
+            wn = f" *(+{waste:.0f} overkill)*" if waste > 0 else " ✅"
+            lines.append(f"• {qty}× **{struct}** → {m['emoji']} {m['label']} ×`{total:,}`{wn}")
+        summary = [f"{EXPLOSIVES[k]['emoji']} **{EXPLOSIVES[k]['label']}**: `{v:,}`" for k, v in totals.items() if v > 0]
+        ts = sum(sulfur_cost(k, v) for k, v in totals.items())
+        tg = sum(gp_cost(k, v) for k, v in totals.items())
+        tc = sum(charcoal_cost(k, v) for k, v in totals.items())
+        text = "\n".join(lines)
+        if summary:
+            text += "\n\n**You'll need:**\n" + "\n".join(summary)
+            text += f"\n🟡 **{ts:,}** Sulfur"
+            if tg: text += f"  •  🪨 **{tg:,}** GP"
+            if tc: text += f"  •  🖤 **{tc:,}** Charcoal"
+        return text
 
-    # Recommendation 2 — most efficient (min waste, tiebreak by sulfur)
-    eff_lines, eff_exp_totals = [], {k: 0 for k in EXPLOSIVES}
-    for struct, qty in raid_list:
-        k, per = best_efficient(struct)
-        if k is None:
-            eff_lines.append(f"• {qty}× **{struct}** → ❌ no explosive works")
-            continue
-        total = per * qty
-        eff_exp_totals[k] += total
-        m = EXPLOSIVES[k]
-        hp = STRUCTURES[struct]["hp"]
-        dmg = STRUCTURES[struct]["exp"][k]
-        waste = per * dmg - hp
-        wn = f" *(+{waste:.0f} overkill)*" if waste > 0 else " ✅ *perfect!*"
-        eff_lines.append(f"• {qty}× **{struct}** → {m['emoji']} {m['label']} ×`{total:,}`{wn}")
-    eff_summary = [f"{EXPLOSIVES[k]['emoji']} **{EXPLOSIVES[k]['label']}**: `{v:,}`" for k, v in eff_exp_totals.items() if v > 0]
-    eff_s = sum(sulfur_cost(k, v) for k, v in eff_exp_totals.items())
-    eff_g = sum(gp_cost(k, v) for k, v in eff_exp_totals.items())
-    eff_c = sum(charcoal_cost(k, v) for k, v in eff_exp_totals.items())
-    eff_text = "\n".join(eff_lines) + "\n\n**You'll need:**\n" + "\n".join(eff_summary)
-    eff_text += f"\n🟡 **{eff_s:,}** Sulfur"
-    if eff_g: eff_text += f"  •  🪨 **{eff_g:,}** Gunpowder"
-    if eff_c: eff_text += f"  •  🖤 **{eff_c:,}** Charcoal"
+    cheap_text   = build_rec(best_cheapest,         "cheapest",      "💰")
+    eff_text     = build_rec(best_efficient,         "min overkill",  "⚡")
+    least_text   = build_rec(best_least_explosives,  "least explo",   "🎯")
 
     # Build embed
-    embed = discord.Embed(title="🔨 Raid Cost Summary", color=0xe74c3c)
+    embed = discord.Embed(
+        title=f"🔨 Raid Cost Summary  ({wb_label})",
+        color=0xe74c3c
+    )
 
     struct_lines = [f"• {q}× **{n}** *(HP: {STRUCTURES[n]['hp']:,})*" for n, q in raid_list]
     embed.add_field(name="🏗️ Raid List", value="\n".join(struct_lines), inline=False)
     embed.add_field(name="━━━━━━━━━━━━━━━━━━", value="\u200b", inline=False)
 
     if exp_lines:
-        embed.add_field(name="💣 Single Explosive Type Breakdown", value="\n\n".join(exp_lines), inline=False)
+        embed.add_field(name=f"💣 Single Explosive Type ({wb_label})", value="\n\n".join(exp_lines), inline=False)
+    else:
+        embed.add_field(name="💣 Single Explosive Type", value=f"❌ No explosives available for {wb_label}", inline=False)
+
     if tool_lines:
         embed.add_field(name="━━━━━━━━━━━━━━━━━━", value="\u200b", inline=False)
         embed.add_field(name="🛠️ Tools (where applicable)", value="\n".join(tool_lines), inline=False)
@@ -573,7 +623,9 @@ def calculate(raid_list: list) -> discord.Embed:
     embed.add_field(name="━━━━━━━━━━━━━━━━━━", value="\u200b", inline=False)
     embed.add_field(name="💰 Rec. 1 — Cheapest (Lowest Sulfur)", value=cheap_text, inline=False)
     embed.add_field(name="━━━━━━━━━━━━━━━━━━", value="\u200b", inline=False)
-    embed.add_field(name="⚡ Rec. 2 — Most Efficient (Min Overkill)", value=eff_text, inline=False)
+    embed.add_field(name="⚡ Rec. 2 — Min Overkill (Least Waste)", value=eff_text, inline=False)
+    embed.add_field(name="━━━━━━━━━━━━━━━━━━", value="\u200b", inline=False)
+    embed.add_field(name="🎯 Rec. 3 — Fewest Explosives (Least Units + Least Waste)", value=least_text, inline=False)
     embed.set_footer(text="⚠️ Hard side values. Soft side ~50% cheaper. Check notes on deployables!")
     return embed
 
@@ -602,12 +654,38 @@ class QuantityModal(discord.ui.Modal):
         self._view.reset_selects()
         await interaction.response.edit_message(embed=self._view.build_embed(), view=self._view)
 
+
+class WorkbenchSelect(discord.ui.Select):
+    def __init__(self, view: "RaidView"):
+        self._raid_view = view
+        options = [
+            discord.SelectOption(
+                label=WB_TIERS[t]["label"],
+                value=str(t),
+                default=(t == view.wb_tier),
+                description=f"Unlocks: {', '.join(EXPLOSIVES[e]['label'] for e in WB_TIERS[t]['explosives'] if e in EXPLOSIVES)[:60]}"
+            )
+            for t in sorted(WB_TIERS)
+        ]
+        super().__init__(placeholder="🔬 Workbench Tier (affects available explosives)", options=options, row=0)
+
+    async def callback(self, interaction: discord.Interaction):
+        self._raid_view.wb_tier = int(self.values[0])
+        # Rebuild this select with updated default
+        self._raid_view.remove_item(self)
+        new_wb = WorkbenchSelect(self._raid_view)
+        self._raid_view.wb_select = new_wb
+        self._raid_view.add_item(new_wb)
+        await interaction.response.edit_message(embed=self._raid_view.build_embed(), view=self._raid_view)
+
+
 class CategorySelect(discord.ui.Select):
     def __init__(self, view: "RaidView", current: str | None = None):
         self._raid_view = view
         options = [discord.SelectOption(label=cat, value=cat, default=(cat == current)) for cat in CATEGORY_NAMES]
         placeholder = f"① Category: {current}" if current else "① Choose a category…"
-        super().__init__(placeholder=placeholder, options=options, row=0)
+        super().__init__(placeholder=placeholder, options=options, row=1)
+
     async def callback(self, interaction: discord.Interaction):
         chosen = self.values[0]
         self._raid_view.current_category = chosen
@@ -618,21 +696,29 @@ class CategorySelect(discord.ui.Select):
         self._raid_view.refresh_structure_select()
         await interaction.response.edit_message(embed=self._raid_view.build_embed(), view=self._raid_view)
 
+
 class StructureSelect(discord.ui.Select):
     def __init__(self, structures: list, session: dict, view: "RaidView"):
         self._session, self._raid_view = session, view
         options = [discord.SelectOption(label=s, description=f"HP: {STRUCTURES[s]['hp']:,}") for s in structures[:25]]
-        super().__init__(placeholder="② Pick a structure…", options=options, row=1)
+        super().__init__(placeholder="② Pick a structure…", options=options, row=2)
+
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_modal(QuantityModal(self.values[0], self._session, self._raid_view))
+
 
 class RaidView(discord.ui.View):
     def __init__(self, session: dict):
         super().__init__(timeout=300)
-        self.session = session
+        self.session          = session
+        self.wb_tier          = 3   # default: T3 (all explosives)
         self.current_category = None
+
+        self.wb_select     = WorkbenchSelect(self)
         self.cat_select    = CategorySelect(self, current=None)
         self.struct_select = StructureSelect(CATEGORIES[CATEGORY_NAMES[0]], session, self)
+
+        self.add_item(self.wb_select)
         self.add_item(self.cat_select)
         self.add_item(self.struct_select)
 
@@ -642,6 +728,7 @@ class RaidView(discord.ui.View):
         self.add_item(self.struct_select)
 
     def reset_selects(self):
+        """Reset category + structure selects after quantity confirmed. Keep wb_tier."""
         self.remove_item(self.cat_select)
         self.remove_item(self.struct_select)
         self.current_category = None
@@ -651,30 +738,40 @@ class RaidView(discord.ui.View):
         self.add_item(self.struct_select)
 
     def build_embed(self) -> discord.Embed:
-        items = self.session["items"]
-        desc = "\n".join(f"• {q}× **{n}** *(HP: {STRUCTURES[n]['hp']:,})*" for n, q in items) if items else "_Nothing added yet._"
+        items    = self.session["items"]
+        wb_label = WB_TIERS[self.wb_tier]["label"]
+        desc     = "\n".join(f"• {q}× **{n}** *(HP: {STRUCTURES[n]['hp']:,})*" for n, q in items) if items else "_Nothing added yet._"
         cat_hint = f"**Selected:** {self.current_category}\n" if self.current_category else ""
         embed = discord.Embed(
             title="🦀 Rust Raid Calculator",
-            description=f"{cat_hint}**① Choose a category**, then **② pick a structure** (HP shown).\nA popup will ask for the quantity.\n\n**Raid List:**\n{desc}",
+            description=(
+                f"**Workbench:** {wb_label}\n\n"
+                f"{cat_hint}"
+                "**① Set your workbench tier** (filters available explosives)\n"
+                "**② Choose a category**, then **③ pick a structure** (HP shown)\n"
+                "A popup will ask for the quantity.\n\n"
+                f"**Raid List:**\n{desc}"
+            ),
             color=0xe67e22,
         )
         embed.set_footer(text="Press ✅ Calculate when done!")
         return embed
 
-    @discord.ui.button(label="✅ Calculate", style=discord.ButtonStyle.success, row=2)
+    @discord.ui.button(label="✅ Calculate", style=discord.ButtonStyle.success, row=3)
     async def calc_btn(self, interaction: discord.Interaction, _):
         if not self.session["items"]:
             await interaction.response.send_message("⚠️ Add at least one structure first!", ephemeral=True)
             return
-        await interaction.response.send_message(embed=calculate(self.session["items"]), ephemeral=True)
+        await interaction.response.send_message(
+            embed=calculate(self.session["items"], self.wb_tier), ephemeral=True
+        )
 
-    @discord.ui.button(label="↩️ Undo Last", style=discord.ButtonStyle.secondary, row=2)
+    @discord.ui.button(label="↩️ Undo Last", style=discord.ButtonStyle.secondary, row=3)
     async def undo_btn(self, interaction: discord.Interaction, _):
         if self.session["items"]: self.session["items"].pop()
         await interaction.response.edit_message(embed=self.build_embed(), view=self)
 
-    @discord.ui.button(label="🗑️ Clear All", style=discord.ButtonStyle.danger, row=2)
+    @discord.ui.button(label="🗑️ Clear All", style=discord.ButtonStyle.danger, row=3)
     async def clear_btn(self, interaction: discord.Interaction, _):
         self.session["items"].clear()
         await interaction.response.edit_message(embed=self.build_embed(), view=self)
