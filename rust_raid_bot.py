@@ -187,7 +187,7 @@ STRUCTURES = {
         "note": "Explosives only",
     },
     "Armored Door": {
-        "hp": 800, "category": "🚪 Doors",
+        "hp": 1000, "category": "🚪 Doors",
         "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Explosives only",
@@ -199,19 +199,19 @@ STRUCTURES = {
         "note": "Explosives only",
     },
     "Wood Double Door": {
-        "hp": 400, "category": "🚪 Doors",
+        "hp": 200, "category": "🚪 Doors",
         "exp": {"c4": 250, "rocket": 145, "satchel": 45, "explo_ammo": 11, "hv_rocket": 55, "inc_rocket": None, "fire_arrows": 8, "beancan": 15, "f1_grenade": 8},
         "tools": {"pickaxe": 11, "hatchet": 5.5, "salvaged_icepick": 11, "salvaged_axe": 12, "jackhammer": 16, "salvaged_sword": 15, "stone_spear": 4, "bone_club": 3, "machete": 8, "rock": 1},
         "note": "Same as 2x wood door",
     },
     "Sheet Metal Double Door": {
-        "hp": 500, "category": "🚪 Doors",
+        "hp": 250, "category": "🚪 Doors",
         "exp": {"c4": 250, "rocket": 250, "satchel": 63, "explo_ammo": 4, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Explosives only",
     },
     "Armored Double Door": {
-        "hp": 1600, "category": "🚪 Doors",
+        "hp": 1000, "category": "🚪 Doors",
         "exp": {"c4": 267, "rocket": 160, "satchel": 53, "explo_ammo": 3.2, "hv_rocket": None, "inc_rocket": None, "fire_arrows": None, "beancan": None, "f1_grenade": None},
         "tools": {"pickaxe": None, "hatchet": None, "salvaged_icepick": None, "salvaged_axe": None, "jackhammer": None, "salvaged_sword": None, "stone_spear": None, "bone_club": None, "machete": None, "rock": None},
         "note": "Explosives only",
