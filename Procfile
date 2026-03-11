@@ -1,0 +1,1 @@
+worker: python rust_raid_bot.py
